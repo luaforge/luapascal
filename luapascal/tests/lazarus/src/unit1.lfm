@@ -1,0 +1,30 @@
+object Form1: TForm1
+  Left = 411
+  Height = 147
+  Top = 196
+  Width = 304
+  HorzScrollBar.Page = 303
+  VertScrollBar.Page = 146
+  ActiveControl = Button1
+  Caption = 'Form1'
+  ClientHeight = 147
+  ClientWidth = 304
+  object Button1: TButton
+    Left = 42
+    Height = 25
+    Top = 51
+    Width = 75
+    Caption = 'Carregar'
+    OnClick = Button1Click
+    TabOrder = 0
+  end
+  object Button2: TButton
+    Left = 180
+    Height = 25
+    Top = 51
+    Width = 75
+    Caption = 'Descarregar'
+    OnClick = Button2Click
+    TabOrder = 1
+  end
+end
