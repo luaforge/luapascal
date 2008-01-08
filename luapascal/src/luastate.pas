@@ -1,8 +1,8 @@
-unit LuaState;
+unit luastate;
 
 interface
 
-uses Lua, uEntity;
+uses lua, uEntity;
 
 type
   TLuaDataType = ( ldtNone, ldtNil, ldtBoolean, ldtLightUserData, ldtNumber, ldtString, ldtTable,

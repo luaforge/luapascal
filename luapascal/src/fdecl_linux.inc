@@ -21,7 +21,6 @@
   (*
   ** access functions (stack -> C/Pascal)
   *)
-
   function lua_isnumber(L: lua_State; idx: Integer): LongBool; cdecl; external fLuaLibFileName;
   function lua_isstring(L: lua_State; idx: Integer): LongBool; cdecl; external fLuaLibFileName;
   function lua_iscfunction(L: lua_State; idx: Integer): LongBool; cdecl; external fLuaLibFileName;
@@ -105,7 +104,6 @@
   (*
   ** miscellaneous functions
   *)
-
   function lua_error(L: lua_State): Integer; cdecl; external fLuaLibFileName;
   function lua_next(L: lua_State; idx: Integer): Integer; cdecl; external fLuaLibFileName;
   procedure lua_concat(L: lua_State; n: Integer); cdecl; external fLuaLibFileName;
@@ -118,7 +116,6 @@
   ** Debug API
   ** =======================================================================
   *)
-
   function lua_getstack(L: lua_State; level: Integer; var ar: lua_Debug): Integer; cdecl; external fLuaLibFileName;
   function lua_getinfo(L: lua_State; what: PChar; var ar: lua_Debug): Integer; cdecl; external fLuaLibFileName;
   function lua_getlocal(L: lua_State; var ar: lua_Debug; n: Integer): PChar; cdecl; external fLuaLibFileName;
@@ -140,6 +137,7 @@
   function luaopen_package(L: lua_State): Integer; cdecl; external fLuaLibFileName;
   function luaopen_string(L: lua_State): Integer; cdecl; external fLuaLibFileName;
   function luaopen_table(L: lua_State): Integer; cdecl; external fLuaLibFileName;
+  
   (* open all previous libraries *)
   procedure luaL_openlibs(L: lua_State); cdecl; external fLuaLibFileName;
 

@@ -8,7 +8,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms
-  { you can add units after this }, Unit1, lua;
+  { you can add units after this }, Unit1, lua, luastate;
 
 begin
  Application.Title:='LuaPascal Test Application';

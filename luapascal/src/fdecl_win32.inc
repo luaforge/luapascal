@@ -21,7 +21,6 @@
   (*
   ** access functions (stack -> C/Pascal)
   *)
-
   lua_isnumber:    function(L: lua_State; idx: Integer): LongBool; cdecl;
   lua_isstring:    function(L: lua_State; idx: Integer): LongBool; cdecl;
   lua_iscfunction: function(L: lua_State; idx: Integer): LongBool; cdecl;
@@ -105,7 +104,6 @@
   (*
   ** miscellaneous functions
   *)
-
   lua_error:  function(L: lua_State): Integer; cdecl;
   lua_next:   function(L: lua_State; idx: Integer): Integer; cdecl;
   lua_concat: procedure(L: lua_State; n: Integer); cdecl;
@@ -118,7 +116,6 @@
   ** Debug API
   ** =======================================================================
   *)
-
   lua_getstack:   function(L: lua_State; level: Integer; var ar: lua_Debug): Integer; cdecl;
   lua_getinfo:    function(L: lua_State; what: PChar; var ar: lua_Debug): Integer; cdecl;
   lua_getlocal:   function(L: lua_State; var ar: lua_Debug; n: Integer): PChar; cdecl;
@@ -140,6 +137,7 @@
   luaopen_package: function(L: lua_State): Integer; cdecl;
   luaopen_string:  function(L: lua_State): Integer; cdecl;
   luaopen_table:   function(L: lua_State): Integer; cdecl;
+  
   (* open all previous libraries *)
   luaL_openlibs:   procedure(L: lua_State); cdecl;
 

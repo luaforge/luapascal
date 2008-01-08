@@ -8,9 +8,6 @@ uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, StdCtrls;
 
 type
-
-  { TForm1 }
-
   TForm1 = class(TForm)
    Button1: TButton;
    Button2: TButton;
@@ -27,18 +24,18 @@ var
 
 implementation
 
-Uses lua;
+uses lua;
 
 { TForm1 }
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
-  LoadLuaLib();
+//  LoadLuaLib();
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
- FreeLuaLib();
+//  FreeLuaLib();
 end;
 
 initialization
