@@ -2,11 +2,14 @@ unit luastate;
 
 interface
 
-uses lua, uEntity;
+uses lua;
 
 type
-  TLuaDataType = ( ldtNone, ldtNil, ldtBoolean, ldtLightUserData, ldtNumber, ldtString, ldtTable,
-                   ldtFunction, ldtUserData, ldtThread, ldtInteger, ldtPChar, ldtCFunction, ldtPointer );
+  TLuaDataType = ( ldtNone, ldtNil, ldtBoolean, ldtLightUserData, ldtNumber,
+                   ldtString, ldtTable, ldtFunction, ldtUserData, ldtThread,
+                   ldtInteger, ldtPChar, ldtCFunction, ldtPointer );
+
+  TLuaState = class;
 
   TLuaTable = class
   end;
@@ -19,6 +22,8 @@ type
 
   TLuaField = class
   private
+    fieldName: string;
+    fls: TLuaState;
     function GetAsBoolean: Boolean;
     function GetAsCFunction: Pointer;
     function GetAsInteger: Integer;
@@ -94,7 +99,37 @@ uses SysUtils;
 
 function TLuaField.DataType: TLuaDataType;
 begin
-
+  if lua_isboolean( fls, -1 ) then
+     result := ldtBoolean
+  else
+  if lua_islightuserdata( fls, -1 ) then
+     result := ldtLightUserData
+  else
+  if lua_isstring( fls, -1 ) then
+     result := ldtString
+  else
+  if lua_istable( fls, -1 ) then
+     result := ldtTable
+  else
+  if lua_isthread( fls, -1 ) then
+     result := ldtThread
+  else
+  if lua_isfunction( fls, -1 ) then
+     result := ldtFunction
+  else
+  if lua_iscfunction( fls, -1 ) then
+     result := ldtCFunction
+  else
+  if lua_isuserdata( fls, -1 ) then
+     result := ldtUserData
+  else
+  if lua_isnumber( fls, -1 ) then
+     result := ldtNumber
+  else
+  if lua_isnil( fls, -1 ) then
+     result := ldtNil
+  else
+     result := ldtNone;
 end;
 
 function TLuaField.DataTypeName: String;
@@ -154,64 +189,65 @@ end;
 
 function TLuaField.IsBoolean: Boolean;
 begin
-  Result := lua_isboolen( LS, -1 );
+  Result := lua_isboolean( fls, -1 );
 end;
 
 function TLuaField.IsCFunction: Boolean;
 begin
-  Result := lua_isCFunction( LS, -1 );
+  Result := lua_isCFunction(fls, -1 );
 end;
 
 function TLuaField.IsInteger: Boolean;
 begin
-  Result := lua_isInteger( LS, -1 );
+  Result := lua_isnumber( fls, -1 ) and ( lua_tonumber( fls, -1 ) = lua_tointeger( fls, -1 ) );
 end;
 
 function TLuaField.IsNil: Boolean;
 begin
-  Result := lua_isnoneornil( LS, -1 );
+  Result := lua_isnoneornil( fls, -1 );
 end;
 
 function TLuaField.IsNull: Boolean;
 begin
-  if lua_isstring( LS, -1 ) then
-  else
-     ;
+  Result := ( lua_isstring( fls, -1 ) and ( lua_tostring( fls, -1 ) = '' ) ) or
+            lua_isnoneornil( fls, -1 );
 end;
 
 function TLuaField.IsNumber: Boolean;
 begin
-  Result := lua_isnumber( LS, -1 );
+  Result := lua_isnumber( fls, -1 );
 end;
 
 function TLuaField.IsPChar: Boolean;
 begin
-  Result := lua_isstring( LS, -1 );
+  Result := lua_isstring( fls, -1 );
 end;
 
 function TLuaField.IsPointer: Boolean;
 begin
-  Result := lua_ispointer( LS, -1 );
+  Result := lua_isfunction( fls, -1 ) or lua_iscfunction( fls, -1 ) or
+            lua_isuserdata( fls, -1 ) or lua_islightuserdata( fls, -1 ) or
+            lua_isthread( fls, -1 );
 end;
 
 function TLuaField.IsString: Boolean;
 begin
-  Result := lua_isstring( LS, -1 );
+  Result := lua_isstring( fls, -1 );
 end;
 
 function TLuaField.IsTable: Boolean;
 begin
-  Result := lua_istable( LS, -1 );
+  Result := lua_istable( fls, -1 );
 end;
 
 function TLuaField.IsThread: Boolean;
 begin
-  Result := lua_isthread( LS, -1 );
+  Result := lua_isthread( fls, -1 );
 end;
 
 function TLuaField.IsUserData: Boolean;
 begin
-  Result := lua_isuserdata( LS, -1 );
+  Result := lua_isuserdata( fls, -1 );
 end;
 
 procedure TLuaField.SetAsBoolean(const Value: Boolean);
